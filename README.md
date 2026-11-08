@@ -4,6 +4,16 @@
 
 MMDS Assignment 2 implementation covering CO2 and CO4 with direct RDD ingestion, typed DataFrames, Spark SQL and Structured Streaming over 2,075,259 real UCI measurements.
 
+## Animated workflow
+
+![GridPulse workflow: pinned UCI readings pass through RDD processing, typed DataFrames and SQL. Clean records feed a file replay, event-time windows, coverage-aware scoring and checkpointed validation.](docs/assets/workflow.gif)
+
+The loop follows both inputs to streaming: **clean readings** from the DataFrame pipeline and a **static profile calibrated on earlier years**. Windows with fewer than 54 readings keep a null alert. Counts come from verified project outputs; animation speed is illustrative.
+
+[Static overview](docs/assets/workflow.png) · [Editable Mermaid diagram](docs/workflow.mmd)
+
+Regenerate the GIF with `source scripts/env.sh` followed by `python scripts/animate_workflow.py`.
+
 ## Present the project
 
 ```bash
