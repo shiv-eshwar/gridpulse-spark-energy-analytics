@@ -1,0 +1,85 @@
+{
+  "archive_pipeline_exit_code": 0,
+  "runtime": "existing Python/Java reused",
+  "input": "cached source ZIP/text reused; not a fresh download",
+  "source_code_changes": "none",
+  "checks": {
+    "quality.json": {
+      "match": true,
+      "compared_keys": [
+        "source_rows",
+        "valid_rows",
+        "rejected_rows",
+        "duplicate_timestamps",
+        "negative_unmetered_minutes",
+        "start",
+        "end",
+        "observed_kwh",
+        "rdd_sql_reconciliation",
+        "spark",
+        "python",
+        "master",
+        "hardware"
+      ]
+    },
+    "splits.json": {
+      "match": true,
+      "compared_keys": [
+        "train_hours",
+        "validation_hours",
+        "test_hours",
+        "coverage_rule",
+        "train_end_exclusive",
+        "validation_end_exclusive"
+      ]
+    },
+    "streaming/validation.json": {
+      "match": true,
+      "compared_keys": [
+        "real_records_replayed",
+        "hourly_windows",
+        "max_energy_error_kwh",
+        "checkpoint_restart_after_files",
+        "batch_stream_parity",
+        "provisional_windows",
+        "late_probe"
+      ]
+    },
+    "anomaly_metrics.csv": {
+      "match": true,
+      "rows": 54,
+      "excluded_volatile_columns": []
+    },
+    "streaming/delayed_replay_experiment.csv": {
+      "match": true,
+      "rows": 3,
+      "excluded_volatile_columns": [
+        "max_state_memory_bytes"
+      ]
+    },
+    "streaming/watermark_experiment.csv": {
+      "match": true,
+      "rows": 3,
+      "excluded_volatile_columns": []
+    }
+  },
+  "finite_filter_probe": {
+    "NaN_accepted": true,
+    "positive_infinity_accepted": true,
+    "current_replay_precleaned": true
+  },
+  "offline_stream_coverage_mismatch": {
+    "offline_minimum_minutes": 54,
+    "stream_below_minimum_windows": [
+      {
+        "start": "2010-01-12 14:00:00",
+        "records": 53
+      },
+      {
+        "start": "2010-01-18 04:00:00",
+        "records": 10
+      }
+    ]
+  },
+  "rerun_zip_crc_pass": true
+}

@@ -1,0 +1,60 @@
+== Parsed Logical Plan ==
+'Sort [1 ASC NULLS FIRST], true
++- 'Aggregate [1], ['date_format('event_time, yyyy-MM) AS month#3711, 'COUNT(1) AS valid_minutes#3712, 'ROUND('SUM('energy_kwh), 4) AS observed_kwh#3713, 'ROUND('AVG('active_kw), 4) AS mean_kw#3714]
+   +- 'UnresolvedRelation [energy], [], false
+
+== Analyzed Logical Plan ==
+month: string, valid_minutes: bigint, observed_kwh: double, mean_kw: double
+Sort [month#3711 ASC NULLS FIRST], true
++- Aggregate [date_format(event_time#0, yyyy-MM, Some(UTC))], [date_format(event_time#0, yyyy-MM, Some(UTC)) AS month#3711, count(1) AS valid_minutes#3712L, round(sum(energy_kwh#16), 4) AS observed_kwh#3713, round(avg(active_kw#1), 4) AS mean_kw#3714]
+   +- SubqueryAlias energy
+      +- View (`energy`, [event_time#0,active_kw#1,reactive_kvar#2,voltage_v#3,current_a#4,kitchen_wh#5,laundry_wh#6,hvac_wh#7,energy_kwh#16,unmetered_wh#26])
+         +- Project [event_time#0, active_kw#1, reactive_kvar#2, voltage_v#3, current_a#4, kitchen_wh#5, laundry_wh#6, hvac_wh#7, energy_kwh#16, (((((active_kw#1 * cast(1000 as double)) / cast(60 as double)) - kitchen_wh#5) - laundry_wh#6) - hvac_wh#7) AS unmetered_wh#26]
+            +- Project [event_time#0, active_kw#1, reactive_kvar#2, voltage_v#3, current_a#4, kitchen_wh#5, laundry_wh#6, hvac_wh#7, (active_kw#1 / cast(60 as double)) AS energy_kwh#16]
+               +- Deduplicate [event_time#0]
+                  +- LogicalRDD [event_time#0, active_kw#1, reactive_kvar#2, voltage_v#3, current_a#4, kitchen_wh#5, laundry_wh#6, hvac_wh#7], false
+
+== Optimized Logical Plan ==
+Sort [month#3711 ASC NULLS FIRST], true
++- Aggregate [_groupingexpression#3822], [_groupingexpression#3822 AS month#3711, count(1) AS valid_minutes#3712L, round(sum(energy_kwh#16), 4) AS observed_kwh#3713, round(avg(active_kw#1), 4) AS mean_kw#3714]
+   +- Project [active_kw#1, energy_kwh#16, date_format(event_time#0, yyyy-MM, Some(UTC)) AS _groupingexpression#3822]
+      +- InMemoryRelation [event_time#0, active_kw#1, reactive_kvar#2, voltage_v#3, current_a#4, kitchen_wh#5, laundry_wh#6, hvac_wh#7, energy_kwh#16, unmetered_wh#26], StorageLevel(disk, memory, deserialized, 1 replicas)
+            +- AdaptiveSparkPlan isFinalPlan=true
+               +- == Final Plan ==
+                  *(2) Project [event_time#0, active_kw#38, reactive_kvar#40, voltage_v#42, current_a#44, kitchen_wh#46, laundry_wh#48, hvac_wh#50, (active_kw#38 / 60.0) AS energy_kwh#16, (((((active_kw#38 * 1000.0) / 60.0) - kitchen_wh#46) - laundry_wh#48) - hvac_wh#50) AS unmetered_wh#26]
+                  +- *(2) HashAggregate(keys=[event_time#0], functions=[first(active_kw#1, false), first(reactive_kvar#2, false), first(voltage_v#3, false), first(current_a#4, false), first(kitchen_wh#5, false), first(laundry_wh#6, false), first(hvac_wh#7, false)], output=[event_time#0, active_kw#38, reactive_kvar#40, voltage_v#42, current_a#44, kitchen_wh#46, laundry_wh#48, hvac_wh#50])
+                     +- ShuffleQueryStage 0
+                        +- Exchange hashpartitioning(event_time#0, 8), ENSURE_REQUIREMENTS, [plan_id=45]
+                           +- *(1) HashAggregate(keys=[event_time#0], functions=[partial_first(active_kw#1, false), partial_first(reactive_kvar#2, false), partial_first(voltage_v#3, false), partial_first(current_a#4, false), partial_first(kitchen_wh#5, false), partial_first(laundry_wh#6, false), partial_first(hvac_wh#7, false)], output=[event_time#0, first#65, valueSet#66, first#67, valueSet#68, first#69, valueSet#70, first#71, valueSet#72, first#73, valueSet#74, first#75, valueSet#76, first#77, valueSet#78])
+                              +- *(1) Scan ExistingRDD[event_time#0,active_kw#1,reactive_kvar#2,voltage_v#3,current_a#4,kitchen_wh#5,laundry_wh#6,hvac_wh#7]
+               +- == Initial Plan ==
+                  Project [event_time#0, active_kw#38, reactive_kvar#40, voltage_v#42, current_a#44, kitchen_wh#46, laundry_wh#48, hvac_wh#50, (active_kw#38 / 60.0) AS energy_kwh#16, (((((active_kw#38 * 1000.0) / 60.0) - kitchen_wh#46) - laundry_wh#48) - hvac_wh#50) AS unmetered_wh#26]
+                  +- HashAggregate(keys=[event_time#0], functions=[first(active_kw#1, false), first(reactive_kvar#2, false), first(voltage_v#3, false), first(current_a#4, false), first(kitchen_wh#5, false), first(laundry_wh#6, false), first(hvac_wh#7, false)], output=[event_time#0, active_kw#38, reactive_kvar#40, voltage_v#42, current_a#44, kitchen_wh#46, laundry_wh#48, hvac_wh#50])
+                     +- Exchange hashpartitioning(event_time#0, 8), ENSURE_REQUIREMENTS, [plan_id=15]
+                        +- HashAggregate(keys=[event_time#0], functions=[partial_first(active_kw#1, false), partial_first(reactive_kvar#2, false), partial_first(voltage_v#3, false), partial_first(current_a#4, false), partial_first(kitchen_wh#5, false), partial_first(laundry_wh#6, false), partial_first(hvac_wh#7, false)], output=[event_time#0, first#65, valueSet#66, first#67, valueSet#68, first#69, valueSet#70, first#71, valueSet#72, first#73, valueSet#74, first#75, valueSet#76, first#77, valueSet#78])
+                           +- Scan ExistingRDD[event_time#0,active_kw#1,reactive_kvar#2,voltage_v#3,current_a#4,kitchen_wh#5,laundry_wh#6,hvac_wh#7]
+
+== Physical Plan ==
+AdaptiveSparkPlan isFinalPlan=false
++- Sort [month#3711 ASC NULLS FIRST], true, 0
+   +- Exchange rangepartitioning(month#3711 ASC NULLS FIRST, 8), ENSURE_REQUIREMENTS, [plan_id=947]
+      +- HashAggregate(keys=[_groupingexpression#3822], functions=[count(1), sum(energy_kwh#16), avg(active_kw#1)], output=[month#3711, valid_minutes#3712L, observed_kwh#3713, mean_kw#3714])
+         +- Exchange hashpartitioning(_groupingexpression#3822, 8), ENSURE_REQUIREMENTS, [plan_id=944]
+            +- HashAggregate(keys=[_groupingexpression#3822], functions=[partial_count(1), partial_sum(energy_kwh#16), partial_avg(active_kw#1)], output=[_groupingexpression#3822, count#3877L, sum#3878, sum#3879, count#3880L])
+               +- Project [active_kw#1, energy_kwh#16, date_format(event_time#0, yyyy-MM, Some(UTC)) AS _groupingexpression#3822]
+                  +- InMemoryTableScan [active_kw#1, energy_kwh#16, event_time#0]
+                        +- InMemoryRelation [event_time#0, active_kw#1, reactive_kvar#2, voltage_v#3, current_a#4, kitchen_wh#5, laundry_wh#6, hvac_wh#7, energy_kwh#16, unmetered_wh#26], StorageLevel(disk, memory, deserialized, 1 replicas)
+                              +- AdaptiveSparkPlan isFinalPlan=true
+                                 +- == Final Plan ==
+                                    *(2) Project [event_time#0, active_kw#38, reactive_kvar#40, voltage_v#42, current_a#44, kitchen_wh#46, laundry_wh#48, hvac_wh#50, (active_kw#38 / 60.0) AS energy_kwh#16, (((((active_kw#38 * 1000.0) / 60.0) - kitchen_wh#46) - laundry_wh#48) - hvac_wh#50) AS unmetered_wh#26]
+                                    +- *(2) HashAggregate(keys=[event_time#0], functions=[first(active_kw#1, false), first(reactive_kvar#2, false), first(voltage_v#3, false), first(current_a#4, false), first(kitchen_wh#5, false), first(laundry_wh#6, false), first(hvac_wh#7, false)], output=[event_time#0, active_kw#38, reactive_kvar#40, voltage_v#42, current_a#44, kitchen_wh#46, laundry_wh#48, hvac_wh#50])
+                                       +- ShuffleQueryStage 0
+                                          +- Exchange hashpartitioning(event_time#0, 8), ENSURE_REQUIREMENTS, [plan_id=45]
+                                             +- *(1) HashAggregate(keys=[event_time#0], functions=[partial_first(active_kw#1, false), partial_first(reactive_kvar#2, false), partial_first(voltage_v#3, false), partial_first(current_a#4, false), partial_first(kitchen_wh#5, false), partial_first(laundry_wh#6, false), partial_first(hvac_wh#7, false)], output=[event_time#0, first#65, valueSet#66, first#67, valueSet#68, first#69, valueSet#70, first#71, valueSet#72, first#73, valueSet#74, first#75, valueSet#76, first#77, valueSet#78])
+                                                +- *(1) Scan ExistingRDD[event_time#0,active_kw#1,reactive_kvar#2,voltage_v#3,current_a#4,kitchen_wh#5,laundry_wh#6,hvac_wh#7]
+                                 +- == Initial Plan ==
+                                    Project [event_time#0, active_kw#38, reactive_kvar#40, voltage_v#42, current_a#44, kitchen_wh#46, laundry_wh#48, hvac_wh#50, (active_kw#38 / 60.0) AS energy_kwh#16, (((((active_kw#38 * 1000.0) / 60.0) - kitchen_wh#46) - laundry_wh#48) - hvac_wh#50) AS unmetered_wh#26]
+                                    +- HashAggregate(keys=[event_time#0], functions=[first(active_kw#1, false), first(reactive_kvar#2, false), first(voltage_v#3, false), first(current_a#4, false), first(kitchen_wh#5, false), first(laundry_wh#6, false), first(hvac_wh#7, false)], output=[event_time#0, active_kw#38, reactive_kvar#40, voltage_v#42, current_a#44, kitchen_wh#46, laundry_wh#48, hvac_wh#50])
+                                       +- Exchange hashpartitioning(event_time#0, 8), ENSURE_REQUIREMENTS, [plan_id=15]
+                                          +- HashAggregate(keys=[event_time#0], functions=[partial_first(active_kw#1, false), partial_first(reactive_kvar#2, false), partial_first(voltage_v#3, false), partial_first(current_a#4, false), partial_first(kitchen_wh#5, false), partial_first(laundry_wh#6, false), partial_first(hvac_wh#7, false)], output=[event_time#0, first#65, valueSet#66, first#67, valueSet#68, first#69, valueSet#70, first#71, valueSet#72, first#73, valueSet#74, first#75, valueSet#76, first#77, valueSet#78])
+                                             +- Scan ExistingRDD[event_time#0,active_kw#1,reactive_kvar#2,voltage_v#3,current_a#4,kitchen_wh#5,laundry_wh#6,hvac_wh#7]

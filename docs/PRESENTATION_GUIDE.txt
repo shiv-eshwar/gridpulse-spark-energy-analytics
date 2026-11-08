@@ -1,0 +1,98 @@
+GRIDPULSE - 8 TO 10 MINUTE PRESENTATION AND LIVE DEMO
+
+Before the session
+- Confirm the CAL 1 dataset/approval and actual group metadata in submission.json.
+- On this machine: bash scripts/present.sh
+- Live demo: bash scripts/present.sh --live
+- The live demo keeps Spark UI open until Enter. It uses a separate temporary
+  checkpoint and leaves the submitted evidence intact.
+- Keep output/pdf/GridPulse_Report.pdf and outputs/evidence.html open.
+- Have outputs/screenshots ready as backup if the live browser fails.
+- The full pipeline command is bash scripts/run_all.sh. Run it before class.
+
+0:00-0:45  Problem and dataset
+"GridPulse studies household electricity telemetry with Apache Spark. We process
+2.075 million timestamped readings from UCI and ask how data quality and delayed
+arrival affect hourly energy summaries and controlled anomaly decisions. The
+source is one household and has no verified fault labels."
+Show: report cover and workflow diagram.
+
+0:45-1:45  Architecture and execution (CO2, 3 marks)
+"The driver builds the plan. Transformations are lazy. Actions create jobs;
+shuffle dependencies divide stages; partition tasks execute the work. Our actual
+machine runs local[4], four task threads in one JVM. The architecture diagram
+also explains how cluster managers allocate executor JVMs on a real cluster."
+Show: architecture.png, actual Spark Jobs and Stages screenshots or live UI.
+Explain one shuffle in reduceByKey/groupBy and point to stage_metrics.csv.
+
+1:45-3:00  RDD operations (CO2, 4 marks)
+Show src/batch.py and outputs/rdd_results.json.
+"textFile creates the RDD. map parses records, filter rejects invalid rows,
+flatMap emits active submeter keys, and reduceByKey combines counts. We also
+compute monthly kWh independently through RDDs and verify exact month keys and
+counts plus rounded energy agreement against SQL."
+Mention actions: count, collect and writes. Explain map-side combining.
+
+3:00-4:00  Typed DataFrames and SQL (CO4, 3 marks)
+Show actual query and table in outputs/evidence.html#sql, or the live SQL output.
+"The explicit schema separates timestamps and doubles. We remove duplicates,
+convert kW-minute readings to kWh and compute hourly coverage. SQL groups and
+sorts monthly energy, top days and hour profiles. Monthly totals are observed
+energy. Missing observations do not become zero consumption."
+Show monthly_coverage.csv and rejected reason counts.
+
+4:00-6:00  Structured Streaming (CO4, 2 marks)
+Show outputs/evidence.html#stream and the live UI.
+"Files arrive atomically. Spark reads a declared schema, rejects nonfinite input,
+tracks event time with a watermark and aggregates one-hour windows. Each batch
+writes updated results using a stable batch ID. We restart from the same
+checkpoint halfway through and compare the latest windows to a batch reference."
+"A window below 54 readings has an insufficient_coverage status and a null
+alert. A false alert would mean we scored it and found no threshold crossing.
+Those statements must remain distinct. Window finality is a separate column."
+Explain the 0/30/180-minute probe and 2/72/168-hour real delayed replays.
+"Longer watermarks retain more evidence for this delay schedule and keep more
+state. They are not universally optimal settings."
+
+6:00-7:30  Results and interpretation (CO4, 3 marks)
+Show anomaly_comparison.png and the delayed-replay table.
+"Profiles train through 2008, thresholds calibrate on 2009, and 2010 is held out.
+We evaluate 18 shared scenarios with three models, yielding 54 evaluations.
+Seasonal profiles are more sensitive to small injected changes in this suite.
+The global profile performs better on larger injections and on the equal-weight
+pooled average. Neither result establishes natural fault detection accuracy."
+Show joint_fault_lateness.csv. Read the actual TP/FN and unscored counts.
+"The joint experiment injects minute bursts before streaming and delays that
+same evidence. It measures final snapshot decisions, not first-alert latency."
+
+7:30-8:30  Validation, limitations and contribution
+"Source hashes are pinned. Tests cover nonfinite input, coverage eligibility,
+key-set errors, interrupted downloads and timestamps. We retain real Spark
+stage/shuffle logs. Local volume and partition experiments measure workload
+sensitivity; cluster scalability needs multi-executor experiments."
+"Our contribution here is an auditable Spark workflow and controlled reliability
+experiments. Publication needs original research and external labelled evidence."
+Conclude with the evidence-to-rubric mapping and invite questions.
+
+Viva answers worth rehearsing
+- Why Spark here? The assignment requires the APIs and execution model. This
+  dataset fits a laptop; Spark overhead may exceed pandas for small workloads.
+- Why not groupByKey? reduceByKey combines locally before shuffling.
+- Why no interpolation? Filling from future observations can leak information
+  and distort evaluation; observed energy and coverage remain explicit.
+- Is source time UTC? No offset is supplied. A fixed process/SQL zone preserves
+  source wall-clock values consistently; true UTC instants remain unresolved.
+- Is every late row dropped? No. Admission depends on watermark and window state.
+- Is a watermark wall-clock time? No, it follows maximum observed event time.
+- Why hour-of-week in streaming if global wins overall? It is a preselected
+  inspectable demonstrator. Test-based model replacement would consume holdout.
+- Does checkpoint restart prove crash recovery? It proves a graceful restart in
+  this experiment. Crash-during-write behavior remains a separate test.
+- Does overwrite by batch ID make any sink exactly-once? No. It handles local
+  single-writer retries for this output design; arbitrary sinks need transactions.
+- Are the 54 cases independent? No. They are 18 shared scenarios x three models.
+- Why weak F1? Short/weak injected changes overlap ordinary household variation;
+  aggregation and threshold calibration also affect sensitivity. Use the actual
+  scenario results and avoid inventing a causal explanation.
+- Is this a new detector or guaranteed paper? No. The report states the research
+  limits and a concrete publication plan.

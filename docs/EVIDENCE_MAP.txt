@@ -1,0 +1,30 @@
+ASSIGNMENT 2 EVIDENCE MAP
+
+Part A / CO2: report Section 3; architecture/workflow diagrams;
+outputs/screenshots/spark_jobs.png and spark_stages.png;
+outputs/stage_metrics.csv and execution_evidence.json.
+
+Part B / CO2: src/batch.py; textFile, map, filter, flatMap, reduceByKey;
+outputs/rdd_results.json; outputs/quality.json; regression test log.
+
+Part C / CO4: explicit StructType in src/batch.py; clean and hourly Parquet;
+outputs/sql/*.sql and matching CSVs; monthly_coverage.csv;
+outputs/screenshots/sql_results.png.
+
+Part D: outputs/figures/workflow.png; report workflow explanation.
+
+Part E / CO4: src/streaming.py; input files, watermarks, hourly aggregates;
+outputs/streaming/validation.json and replay_progress.json;
+outputs/screenshots/streaming_results.png;
+watermark_experiment.csv, delayed_replay_experiment.csv;
+joint_fault_lateness.csv and joint_protocol.json.
+
+Part F / CO4: output/pdf/GridPulse_Report.pdf; sections cover dataset, Spark,
+RDDs, DataFrames, SQL, streaming, observations, references and limitations.
+CAL 1 integration and actual group details require the user's source materials.
+Edit submission.json and regenerate the report after supplying those details.
+
+Archive contents: code, tests, report, result tables, screenshots, selected Spark
+logs, protocol/validation JSON and source manifest. Full raw data, the Python
+runtime and all streaming checkpoints/snapshots regenerate through run_all.sh;
+they are not necessary to inspect the bundled evidence.

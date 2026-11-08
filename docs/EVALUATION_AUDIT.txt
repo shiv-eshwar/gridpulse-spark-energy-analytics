@@ -1,0 +1,180 @@
+GRIDPULSE - PROFESSOR-STYLE EVALUATION AUDIT
+Date: 2026-11-08
+Scope: source code, submitted ZIP, PDF text, stored results, regression tests,
+Spark edge-case probe, and a separate reproduction of the submitted archive.
+This is an audit. Application source and the existing submission are unchanged.
+
+VERDICT
+Strong assignment foundation, but not ready to claim full marks as submitted.
+Publication readiness is a separate and substantially higher standard; it is not
+established by this prototype. Historical telemetry replay is explicitly allowed
+by Part E and is not itself a defect.
+
+PROVISIONAL MARKS (not the instructor's grade)
+Architecture/workflow (CO2): 3/3 if the team explains jobs/stages/tasks correctly.
+RDD implementation (CO2): 3.5/4; required APIs and cross-API validation are present.
+DataFrames/SQL (CO4): 2.5/3; required operations exist, literal screenshots absent.
+Structured Streaming (CO4): 1.5/2; works, but scoring eligibility is inconsistent.
+Results/discussion (CO4): 2/3; useful evidence, incomplete conditional analysis.
+Total: about 12.5/15, assuming CAL 1 dataset continuity is accepted and a competent
+live demonstration. Grade consequences of an unapproved dataset change are not
+predictable from the supplied rubric. There is no guarantee of any mark.
+
+WHAT WAS VERIFIED
+- Four parser/timezone regression tests pass.
+- 2,075,259 raw rows, 2,049,280 valid rows, 25,979 rejected rows, no duplicate
+  source timestamps in this run; RDD/SQL monthly reconciliation reports PASS.
+- 54 model-scenario evaluations: 3 models x 18 shared injection scenarios.
+- Chronological train/calibration/test boundaries are implemented without
+  fitting profiles or thresholds to injected test labels.
+- Each saved model has 7,620 held-out rows with unique timestamps.
+- ZIP CRC integrity passes; archived Python/shell code matches working source.
+- Native screen capture remains unavailable; generated table images are not
+  represented as screenshots.
+- Separate archive reproduction result is recorded in the audit reproduction
+  JSON alongside this review. It reuses the installed runtime and cached raw
+  source; a fresh OS installation and fresh network download were not tested.
+
+FINDINGS IN PRIORITY ORDER
+
+1. HIGH - Assignment 1 continuity is unresolved.
+   Evidence: README.md and report cover explicitly acknowledge no CAL 1 dataset
+   or report was supplied. The assignment says to use the dataset selected in
+   Assignment 1 and update the CAL 1 report.
+   Impact: a technically strong standalone project may still fail a submission
+   constraint. This cannot be solved by asserting that a different dataset is
+   better.
+   Action: confirm the selected dataset matches CAL 1, or obtain instructor
+   approval for the change; merge the actual earlier report. Add real names,
+   roll numbers, institution and actual contribution records.
+
+2. HIGH - Required screenshot evidence is absent.
+   Evidence: outputs/screenshots/README.txt describes blank native captures.
+   Parts C and E explicitly request screenshots. CSVs and rendered result tables
+   are useful evidence but do not automatically satisfy that requirement.
+   Action: capture a real SQL result, a streaming aggregate with batch/input
+   evidence, and Spark Jobs/Stages UI. Include captions and input/batch IDs.
+   Keep the table figures; do not relabel them as UI screenshots.
+
+3. MEDIUM - Streaming scores windows that offline evaluation excludes.
+   Evidence: src/experiments.py:19 applies minutes >= 54;
+   src/streaming.py:24-30 scores every aggregate, regardless of record count.
+   Saved replay includes 2010-01-12 14:00 (53 records) and
+   2010-01-18 04:00 (10 records), both with an ordinary False alert.
+   Impact: insufficient evidence appears indistinguishable from a scored
+   non-alert. Provisional updates can also be scored before 90% coverage.
+   The generic report statement that detection requires 54 valid minutes is
+   therefore not true for the streaming path.
+   Action: make eligibility explicit in both paths. Keep count/energy aggregates
+   for all windows, but use a null alert plus an insufficient_coverage status
+   below 54; distinguish eligible provisional results from finalized windows.
+   Add a regression covering a 10-record window and revise alert comparisons to
+   compare eligible windows and report unscored windows separately.
+
+4. MEDIUM - Streaming input validation accepts NaN and positive infinity.
+   Evidence: src/streaming.py:23 checks active_kw >= 0. A direct Spark probe
+   confirmed that NaN and +Infinity pass this predicate.
+   Impact: NaN/Infinity could corrupt mean/sum and produce meaningless scores.
+   Scope: the present replay is sourced from the already-clean batch Parquet,
+   so this does NOT show contamination of the existing published results.
+   Action: reject null, NaN and infinite values explicitly at the stream
+   boundary; add malformed-record accounting and edge-case verification.
+
+5. MEDIUM - Research question is stronger than the demonstrated alert result.
+   Evidence: all three delayed real-data replays have zero alert disagreements.
+   Retained records and hourly energy errors differ, so retention/aggregate/state
+   tradeoffs are demonstrated. An effect on fault-detection accuracy or detection
+   latency is not demonstrated; no labelled injected faults enter that replay.
+   Action: frame the completed contribution as evidence retention and aggregate
+   fidelity. For the joint anomaly claim, introduce controlled faults into the
+   raw-minute stream, compare against the same offline reference, and measure
+   missed events and detection delay under delay distributions.
+
+6. MEDIUM - Pooled F1 conceals a meaningful conditional result.
+   Evidence: mean F1 across the three seeds is approximately:
+                          +1 kW spike   +4 kW spike
+       global                0.0470        0.7651
+       hour-of-day           0.1589        0.2042
+       hour-of-week          0.1641        0.2746
+   For +1 kW shifts, global F1 is 0.0221 versus weekly 0.1643; for +4 kW shifts,
+   global F1 is 0.7552 versus weekly 0.2462.
+   Impact: 'global wins overall' is true for this equal-weight scenario average,
+   but does not mean global wins at every amplitude. Equal scenario weighting
+   is also an experimental choice, not a deployment distribution.
+   Action: lead discussion with the amplitude-dependent tradeoff; report
+   precision/recall, background alerts and thresholds by scenario. Investigate
+   calibration/scale differences as hypotheses rather than established causes.
+
+7. MEDIUM - No empirical distributed scalability result.
+   Evidence: src/experiments.py:61-70 fixes local[4] and one data volume, varies
+   a round-robin repartition count and collects 168 groups. Three runs per
+   configuration have sub-second timings and substantial warmup/noise exposure.
+   Impact: this is a useful partition-sensitivity microbenchmark, not strong
+   scaling, weak scaling, or a large-cluster throughput study. The report mostly
+   acknowledges this correctly. Adding partitions does not add machines.
+   Action for assignment: show actual tasks, stage boundaries, shuffled bytes
+   and a clearly labelled local resource/data-volume experiment. For research:
+   use multiple executor allocations, controlled warmups, more repetitions,
+   measured throughput and hardware/resource accounting.
+
+8. MEDIUM/LOW - Correctness comparisons do not reject every extra-key case.
+   Evidence: src/batch.py:57 zips two month lists without asserting equal lengths.
+   src/streaming.py:60 uses an inner join and only verifies that every reference
+   key matched; additional stream-only windows would be ignored.
+   Scope: current stored results have matching key sets. This is a weakness of
+   the checks, not evidence that existing totals are wrong.
+   Action: assert equal key sets/cardinality first, or use an outer join with
+   presence indicators; then compare values and eligible scores.
+
+9. MEDIUM/LOW - Source provenance is recorded, not pinned against expected bytes.
+   Evidence: scripts/download.py skips existing archive/text files, writes the
+   archive directly during download and creates fresh hashes on each run.
+   Impact: a partial ZIP download remains present and fails again on rerun;
+   a stale or locally changed extracted text is accepted and assigned a new hash.
+   Action: download to a temporary file with atomic rename, retry on transport
+   failure, validate known expected archive/text hashes or explicitly document
+   intentional source changes before accepting cached artifacts.
+
+10. LOW - Evidence bundle omits event logs/checkpoints by design.
+    Evidence: scripts/package.py:12 excludes event_logs, checkpoint and snapshots,
+    while the README/report point to those directories as evidence.
+    Impact: an evaluator can inspect CSVs and progress JSON immediately, but
+    cannot inspect the original Spark history from the ZIP without a rerun.
+    Action: include a small selected event-log/history export or genuine Jobs/
+    Stages screenshots, and clearly distinguish bundled from regenerable files.
+
+11. LOW - Missing values and physical residuals need more diagnostic detail.
+    Evidence: 25,979 records are rejected without reason counts or examples;
+    988 residual readings are below -0.1 Wh, with a measured minimum of -2.4 Wh.
+    Action: export rejection reasons, example rejected records, monthly coverage,
+    missing-run lengths, and the residual distribution. Do not attribute all
+    negative residuals to rounding without supporting measurement metadata.
+    Retain the existing clear distinction between observed and complete energy.
+
+12. LOW - Research and delivery wording could be more precise.
+    '54 scenarios' is better written '18 shared perturbation scenarios evaluated
+    with 3 models (54 model-scenario evaluations)'. The streaming model is
+    preselected as hour-of-week despite the global model's larger pooled F1;
+    justify that demonstrator choice. Do not select a replacement using 2010
+    test scores and then present the same 2010 evaluation as untouched.
+    Graceful checkpoint restart is tested; crash-during-write recovery and
+    arbitrary external-sink exactly-once delivery are not established.
+
+PUBLICATION REVIEW
+Not conference-ready as it stands. The data and methods are established, true
+fault labels are absent, the stream uses a single deterministic delay schedule,
+and experiments execute on one local JVM. These are acceptable assignment
+constraints when disclosed, but they do not support a strong acceptance claim.
+A credible next paper needs an original systems or detection contribution,
+labelled multi-household evidence, stronger forecasting/anomaly baselines,
+paired uncertainty estimates, a joint fault/lateness study and appropriate
+cluster/resource evaluation. A more complicated model alone is not novelty.
+
+BEFORE-SUBMISSION ORDER
+1. Resolve CAL 1 continuity and actual group details.
+2. Fix the two stream-boundary/eligibility issues and verify their edge cases.
+3. Capture and caption genuine SQL, streaming and Spark stage screenshots.
+4. Correct the amplitude-dependent results discussion and scope of conclusions.
+5. Strengthen key-set assertions and add a concise data-quality/coverage table.
+6. Rebuild the report and ZIP, rerun the submitted artifact, and rehearse a short
+   live demonstration in which every member can explain the whole workflow.

@@ -1,0 +1,188 @@
+<!doctype html><html><head><meta charset="utf-8"><title>GridPulse | Recorded execution evidence</title><style>body{font:18px -apple-system,Arial,sans-serif;color:#16324f;background:#eef3f6;margin:0;padding:24px}section{background:white;padding:28px;margin:0 auto 40px;max-width:1250px;border-radius:12px}h1{font-size:32px}h2{color:#007f82}table{border-collapse:collapse;width:100%;font-size:17px}th,td{padding:8px 12px;border-bottom:1px solid #d6e0e7;text-align:left}th{background:#16324f;color:white}pre{white-space:pre-wrap;background:#f0f5f7;padding:16px;font-size:16px}.note{color:#536879;font-size:16px}nav a{margin-right:24px}</style></head><body><nav><a href="#sql">Spark SQL</a><a href="#stream">Streaming</a><a href="#quality">Data quality</a></nav>
+<section id="sql"><h1>GridPulse - Spark SQL query and result</h1><p class="note">Recorded execution evidence | outputs/sql/top_days.sql + top_days.csv | Historical telemetry replay, local[4]</p><pre>SELECT to_date(event_time) day, COUNT(*) valid_minutes,
+        ROUND(SUM(energy_kwh),3) observed_kwh FROM energy GROUP BY 1
+        HAVING COUNT(*) &gt;= 1380 ORDER BY observed_kwh DESC LIMIT 10</pre><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>day</th>
+      <th>valid_minutes</th>
+      <th>observed_kwh</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2006-12-23</td>
+      <td>1440</td>
+      <td>79.556</td>
+    </tr>
+    <tr>
+      <td>2007-02-03</td>
+      <td>1440</td>
+      <td>67.162</td>
+    </tr>
+    <tr>
+      <td>2006-12-26</td>
+      <td>1440</td>
+      <td>65.569</td>
+    </tr>
+    <tr>
+      <td>2007-02-18</td>
+      <td>1440</td>
+      <td>63.829</td>
+    </tr>
+    <tr>
+      <td>2007-02-04</td>
+      <td>1440</td>
+      <td>59.932</td>
+    </tr>
+    <tr>
+      <td>2007-02-11</td>
+      <td>1440</td>
+      <td>59.520</td>
+    </tr>
+    <tr>
+      <td>2007-03-31</td>
+      <td>1440</td>
+      <td>58.492</td>
+    </tr>
+    <tr>
+      <td>2006-12-31</td>
+      <td>1440</td>
+      <td>58.237</td>
+    </tr>
+    <tr>
+      <td>2007-03-11</td>
+      <td>1440</td>
+      <td>58.011</td>
+    </tr>
+    <tr>
+      <td>2007-01-21</td>
+      <td>1440</td>
+      <td>56.788</td>
+    </tr>
+  </tbody>
+</table></section>
+<section id="stream"><h1>GridPulse - Structured Streaming results</h1><p class="note">Recorded execution evidence | replay_progress.json + replay_hourly.csv | Historical telemetry replay, local[4]</p><h2>21,600 real input records | checkpoint restart | batch parity PASS</h2><h2>Actual micro-batch progress</h2><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>batch_id</th>
+      <th>input_rows</th>
+      <th>watermark</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>3600</td>
+      <td>1970-01-01T00:00:00.000Z</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3600</td>
+      <td>2010-01-03T10:00:00.000Z</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>3600</td>
+      <td>2010-01-05T22:00:00.000Z</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>3600</td>
+      <td>2010-01-08T10:00:00.000Z</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>3600</td>
+      <td>2010-01-10T22:00:00.000Z</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>3600</td>
+      <td>2010-01-15T14:09:00.000Z</td>
+    </tr>
+  </tbody>
+</table><h2>Hourly aggregates and scoring eligibility (selected windows)</h2><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>start</th>
+      <th>records</th>
+      <th>mean_kw</th>
+      <th>scoring_status</th>
+      <th>alert</th>
+      <th>window_state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2010-01-12 14:00:00</td>
+      <td>53</td>
+      <td>2.5081</td>
+      <td>insufficient_coverage</td>
+      <td>UNSCORED</td>
+      <td>finalized</td>
+    </tr>
+    <tr>
+      <td>2010-01-18 04:00:00</td>
+      <td>10</td>
+      <td>0.3134</td>
+      <td>insufficient_coverage</td>
+      <td>UNSCORED</td>
+      <td>provisional</td>
+    </tr>
+    <tr>
+      <td>2010-01-01 00:00:00</td>
+      <td>60</td>
+      <td>1.0859</td>
+      <td>eligible</td>
+      <td>False</td>
+      <td>finalized</td>
+    </tr>
+    <tr>
+      <td>2010-01-01 01:00:00</td>
+      <td>60</td>
+      <td>0.6512</td>
+      <td>eligible</td>
+      <td>False</td>
+      <td>finalized</td>
+    </tr>
+    <tr>
+      <td>2010-01-01 02:00:00</td>
+      <td>60</td>
+      <td>0.6346</td>
+      <td>eligible</td>
+      <td>False</td>
+      <td>finalized</td>
+    </tr>
+    <tr>
+      <td>2010-01-01 03:00:00</td>
+      <td>60</td>
+      <td>0.6530</td>
+      <td>eligible</td>
+      <td>False</td>
+      <td>finalized</td>
+    </tr>
+  </tbody>
+</table></section>
+<section id="quality"><h1>GridPulse - Input validation</h1><p class="note">Recorded execution evidence | quality.json + rejections.json | Historical telemetry replay, local[4]</p><pre>{
+  &quot;source_rows&quot;: 2075259,
+  &quot;valid_rows&quot;: 2049280,
+  &quot;rejected_rows&quot;: 25979,
+  &quot;duplicate_timestamps&quot;: 0,
+  &quot;negative_unmetered_minutes&quot;: 988,
+  &quot;minimum_unmetered_wh&quot;: -2.3999999999999986,
+  &quot;rejection_reason_counts&quot;: {
+    &quot;accepted&quot;: 2049280,
+    &quot;missing_measurement&quot;: 25979
+  },
+  &quot;start&quot;: &quot;2006-12-16 17:24:00&quot;,
+  &quot;end&quot;: &quot;2010-11-26 21:02:00&quot;,
+  &quot;observed_kwh&quot;: 37283.747700003165,
+  &quot;rdd_sql_reconciliation&quot;: &quot;PASS&quot;,
+  &quot;wall_seconds&quot;: 74.18968383299944,
+  &quot;spark&quot;: &quot;3.5.3&quot;,
+  &quot;python&quot;: &quot;3.11.15&quot;,
+  &quot;master&quot;: &quot;local[4]&quot;,
+  &quot;hardware&quot;: &quot;macOS-27.2-arm64-arm-64bit&quot;
+}</pre></section>
+</body></html>

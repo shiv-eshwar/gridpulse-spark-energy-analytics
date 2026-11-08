@@ -1,0 +1,11 @@
+{
+  "units": "Wh per minute",
+  "cause": "unknown; rounding or measurement alignment require source metadata",
+  "quantiles": {
+    "min": -2.3999999999999986,
+    "p01": 1.1666666666666679,
+    "median": 5.5,
+    "p99": 44.8,
+    "max": 124.83333333333334
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "streaming_model": "hour_of_week",
+  "selection": "preselected demonstrator, not selected using test scores",
+  "models": {
+    "global": {
+      "threshold": 3.8375150240612945,
+      "keys": [
+        "global_key"
+      ],
+      "calibration_year": 2009,
+      "quantile": 0.99
+    },
+    "hour_of_day": {
+      "threshold": 10.662489860053059,
+      "keys": [
+        "hour"
+      ],
+      "calibration_year": 2009,
+      "quantile": 0.99
+    },
+    "hour_of_week": {
+      "threshold": 9.914134045877208,
+      "keys": [
+        "how"
+      ],
+      "calibration_year": 2009,
+      "quantile": 0.99
+    }
+  }
+}

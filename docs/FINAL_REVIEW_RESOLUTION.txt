@@ -1,0 +1,49 @@
+GRIDPULSE - FINAL REVIEW RESOLUTION
+
+Implemented corrections
+1. Stream boundary rejects null timestamps, null/nonfinite/negative power.
+2. Offline and streaming decisions share the >=54-reading coverage contract.
+   Insufficient or missing-profile windows have null scores and alerts.
+3. Scoring eligibility and watermark-based window finality have separate labels.
+4. Alert comparisons include only mutually eligible windows and expose unscored
+   counts separately; aggregate comparisons check keys before numerical parity.
+5. RDD/SQL reconciliation verifies both month cardinality and key sets.
+6. Source downloads use pinned archive/text hashes, retries, CRC and atomic
+   publication. Changed text and interrupted cache files recover safely.
+7. Data diagnostics export rejection reasons/examples, monthly coverage,
+   consecutive missing runs and residual quantiles without inventing causes.
+8. The report now explains amplitude-dependent model behavior and accurately
+   names 18 shared scenarios / 54 model-scenario evaluations.
+9. Streaming calibration is a separate validation-only artifact. The weekly
+   model remains a preselected demonstrator, avoiding test-based selection.
+10. A joint raw-minute burst/lateness experiment compares independent offline
+    decisions to 2-hour and 168-hour streaming results. Low recall remains visible.
+11. Local workload experiments include warm-ups and fixed-resource volume runs.
+    Selected completed Spark logs and task/shuffle metrics accompany the bundle.
+12. Genuine browser screenshots show SQL results, real micro-batch output and
+    Spark Jobs/Stages. Captions distinguish stored result views from live UI.
+13. An isolated live-demo command keeps Spark UI open and preserves submission
+    evidence. The timed guide and evidence map support an 8-10 minute viva.
+14. Preflight separates measured technical readiness from actual group metadata
+    and confirmation of CAL 1 continuity or instructor approval.
+
+Verification
+The release preflight and execution logs are the authoritative current status.
+Regression tests include nonfinite inputs, coverage eligibility, missing models,
+extra/duplicate keys, interrupted downloads and unpadded source dates. The final
+source pipeline must finish before packaging; the report is rendered for visual
+inspection and the ZIP receives integrity/content checks.
+
+Human requirements still depend on supplied information
+- Actual names, roll numbers and contribution details.
+- Confirmation that this dataset matches CAL 1, or instructor approval.
+- Merging with the actual prior report when it is supplied.
+These are not replaced by a fabricated identity or approval checkbox.
+
+Research limitations retained honestly
+Historical one-household data has no verified natural fault ground truth.
+Controlled bursts do not validate real faults. Final snapshot accuracy does not
+measure detection latency. A graceful restart does not test crash-during-write
+failure. Local timings do not establish distributed scaling. Broader baselines,
+labelled multi-household data, uncertainty estimates and multi-executor studies
+remain the publication plan, rather than unsupported completed claims.

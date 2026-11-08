@@ -1,0 +1,12 @@
+flowchart TB
+  subgraph Executed[Executed topology: local four task threads]
+    Driver[Python driver and SparkSession] --> Scheduler[Local scheduler in Spark JVM]
+    Scheduler --> Tasks[Four concurrent task threads]
+    Tasks --> Cache[Local cache and shuffle files]
+  end
+  subgraph Conceptual[Conceptual distributed deployment]
+    D[Driver: jobs and stages] --> C[Standalone / YARN / Kubernetes resource allocation]
+    C --> E1[Executor JVM 1: tasks / cache / shuffle]
+    C --> EN[Executor JVM N: tasks / cache / shuffle]
+    E1 <--> EN
+  end

@@ -1,0 +1,12 @@
+{
+  "real_records_replayed": 21600,
+  "hourly_windows": 361,
+  "max_energy_error_kwh": 2.220446049250313e-15,
+  "checkpoint_restart_after_files": 3,
+  "batch_stream_parity": "PASS",
+  "eligible_windows": 359,
+  "insufficient_coverage_windows": 2,
+  "input_boundary": "reject null timestamps, null/nonfinite/negative power",
+  "provisional_windows": "Snapshots label finalized/provisional using window end and last observed query watermark.",
+  "late_probe": "Four synthetic events test semantics; main replay uses real readings."
+}

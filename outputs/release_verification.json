@@ -1,0 +1,39 @@
+{
+  "full_pipeline_exit_code": 0,
+  "extracted_zip_tests": "11 passed",
+  "pdf_pages": 21,
+  "pdf_visual_review": "all rendered pages inspected",
+  "genuine_screenshots_reviewed": 4,
+  "technical_preflight": "PASS (15 checks)",
+  "live_demo": "executed successfully; persistent UI and final unscored window verified",
+  "scope": "existing installed environment; fresh OS installation not tested",
+  "remaining_user_inputs": [
+    "CAL 1 continuity or actual approval",
+    "actual group names and roll numbers"
+  ],
+  "source_sha256": {
+    "src/batch.py": "0cecf9fee20ae012cbf959440b7de715572d932eca4250ec516ae34cb62093bd",
+    "src/common.py": "708e75d033f69a210e0d894fae2815bbd522dec025c09d176d024552f8e88007",
+    "src/diagnostics.py": "9c539206d768c1d5d29e89a5845b608ba1a2bd67ef8873bba8a086253c502273",
+    "src/experiments.py": "57b704e200165c39caf9d55fc96c312ca69465c855d7f5f1b92448280dceab3b",
+    "src/joint_experiment.py": "787d3bcf0c85c6d1c54c4c8d9df8bab0750027c6d86ea0a16518cc2b35f7054f",
+    "src/streaming.py": "f731b9562bcbf8efaf29769729b2db642d6a953ed796888560ae488a127ea4dd",
+    "src/validation.py": "cd90386e8de091509b042308b559768702ec571a4a05c1f78b532a1b2e6357e5",
+    "scripts/download.py": "e1e9907d2ec511c3b82ad9fd4ca609dbdb82d61e4010fea0ba9cd5cd787e9267",
+    "scripts/env.sh": "a4f163a5b3c75b1b845353fc89db87f6eab1c9bd7dbccf0f40df77418b6a0057",
+    "scripts/environment.py": "73cd53bdb9e64bcf18b886eda87fbdc40f41060e246543d4cc1c8d66deab2dac",
+    "scripts/event_summary.py": "b95430e78c9f6ea99922ff2ce44ad8548f0a807bd6f9cc724cf6b3ef08d1e930",
+    "scripts/evidence.py": "8c377beb1cb0b53666ccc6f603da04d382c1af0ec2e2297644a4bea1cff381dd",
+    "scripts/live_demo.py": "c916a8359743b2ca5f2588e5833b8005b41130f29e7e3f7976059cc1ee3427e3",
+    "scripts/package.py": "f2143a467d917c32a3d5b0ff609c6ab9c993af3f8e4e21e7385536c1f0479ada",
+    "scripts/preflight.py": "80550fa3fe4c55eef876c9c5255fe595ff65669a0ea75967aefcbe84a4d374d9",
+    "scripts/present.sh": "246ab41fa1bb0810f95eb95a1443748eb559a41c34ffe94e5839b7d551410852",
+    "scripts/report.py": "ad92674d92e20f3c7c4d8b66f6c0b838b215703a66305208dea3e69a3983a146",
+    "scripts/run_all.sh": "cee5d7ea0a31fbfde575aefda9efa42b4b40d9c9a8a750d997b3e59f388ac307",
+    "scripts/setup.sh": "af6262bf575081caa4e95a02ce50a6627b62eb63e0f706b21578ea315e8be62f",
+    "scripts/show_results.py": "f43f8ac650431a4a3b24ae02426c564726d6b2bab0ab753bc49be3447935b604",
+    "tests/test_download.py": "78828cebd24785665f4a46e1d02826d2a6a7c774837c27d75044fdbbae3aab04",
+    "tests/test_parsing.py": "05fbcf2d12fe803c3bba39254e25ba120fce8c188034685a57a99b183a001ce3",
+    "tests/test_streaming_contract.py": "7ad82a621f8896648b2a9a736e8046625980368f07b3e1d0f2da928a7e549657"
+  }
+}

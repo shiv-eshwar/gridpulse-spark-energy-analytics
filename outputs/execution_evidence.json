@@ -1,0 +1,30 @@
+[
+  {
+    "application": "GridPulse-Batch",
+    "jobs": 52,
+    "failed_jobs": 0,
+    "stages_with_tasks": 57,
+    "event_log": "local-1794155195904"
+  },
+  {
+    "application": "GridPulse-Experiments",
+    "jobs": 138,
+    "failed_jobs": 0,
+    "stages_with_tasks": 138,
+    "event_log": "local-1794155276306"
+  },
+  {
+    "application": "GridPulse-JointFaultLateness",
+    "jobs": 53,
+    "failed_jobs": 0,
+    "stages_with_tasks": 67,
+    "event_log": "local-1794155397632"
+  },
+  {
+    "application": "GridPulse-StructuredStreaming",
+    "jobs": 125,
+    "failed_jobs": 0,
+    "stages_with_tasks": 164,
+    "event_log": "local-1794155290098"
+  }
+]

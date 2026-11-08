@@ -1,0 +1,58 @@
+Demo (already generated outputs may be inspected without rerunning):
+1. Open output/pdf/GridPulse_Report.pdf and explain problem + limitation.
+2. Show data/raw/manifest.json, outputs/quality.json and rejected row count.
+3. Show src/batch.py: textFile -> filter header -> map parser -> filter valid.
+4. Show flatMap active submeter keys and reduceByKey, explain map-side combine.
+5. Show outputs/rdd_results.json and RDD-vs-SQL energy reconciliation PASS.
+6. Show outputs/sql/*.sql and matching CSV, explicit StructType, hourly features.
+7. Show outputs/query_plan.txt and Spark event logs. Explain lazy execution.
+8. Show src/streaming.py: file schema, watermark, windows, static model join,
+   checkpoint, foreachBatch idempotent per-batch directories, update mode.
+9. Show streaming replay validation and 0/30/180 minute late-data experiment.
+10. Show anomaly comparisons including weak results. Explain chronology and
+    the difference between injected labels and real fault labels.
+
+Commands:
+source scripts/env.sh
+python scripts/show_results.py
+python -m pytest -q tests
+python -m src.batch
+python -m src.experiments
+python -m src.streaming
+python scripts/report.py
+# Spark UI is on http://localhost:4040 only while an application is running.
+# Replay is intentionally accelerated: one new file is published only after
+# the previous micro-batch drains. Sleep time would add no semantic coverage.
+
+Likely viva questions:
+Driver: plans work, owns SparkContext and scheduling, gathers small results.
+Cluster manager: allocates resources. local[4] has no external cluster manager;
+its local scheduler executes four task threads inside one JVM.
+Executor: runs partition tasks, caches and shuffles. Production deployments use
+separate worker JVMs; this laptop demonstration must not be called a cluster.
+Job/stage/task: an action triggers a job; shuffle dependencies split stages;
+one task processes one partition per stage. Some actions can create several jobs.
+Lazy transformations: lineage is built first; count/collect/write trigger work.
+reduceByKey vs groupByKey: local aggregation reduces shuffled intermediate data.
+RDD vs DataFrame: RDD has explicit functions; DataFrames expose schema to Catalyst.
+AQE: Spark can revise shuffle partition decisions at runtime.
+Cache: avoids reparsing; it consumes memory and must be released in longer apps.
+Watermark: derived from observed maximum event time and configured delay; it is
+not wall-clock time and is not an absolute guarantee all late rows get dropped.
+Window eviction: depends on window boundaries and watermark from prior batches.
+Update output: provisional aggregate changes; downstream uses latest window view.
+Checkpoint: preserves offsets and state; changing topology/state schema may require
+new checkpoint. Reprocessing source from scratch uses a new output root.
+Exactly once: Spark checkpointing does not automatically make any external sink
+exactly-once. This single-writer file demo overwrites by stable batch ID on retry.
+Energy units: kW / 60 = kWh per one-minute sample. Submeters report Wh per minute.
+Missing data: never fill from future; monthly totals are observed partial totals.
+Time zone: preserve source wall-clock order via UTC session with no claim that
+French source readings are true UTC instants. DST disambiguation needs metadata.
+F1: measures injected-label agreement; background flags may be real unusual usage.
+Publication: current work is a reproducible prototype, not proven research novelty.
+
+Suggested 4-person split (change to actual contributions):
+A: ingestion, schema and data-quality checks; B: SQL and visual analytics;
+C: streaming and recovery; D: experiments, literature and report integration.
+Each person should be able to explain the entire dataflow.

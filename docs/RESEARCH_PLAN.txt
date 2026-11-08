@@ -1,0 +1,56 @@
+GridPulse research scope and publication gate
+
+Research question: How do seasonal conditioning and event-time lateness budgets
+jointly affect detection sensitivity, retained evidence, and state cost in a
+reproducible Spark energy-telemetry pipeline?
+
+Completed assignment-scale experiments:
+1. Global, hour-of-day, and hour-of-week median/MAD baselines.
+2. Chronological train (2006-2008), calibration (2009), test (2010).
+3. Point spikes and six-hour shifts at +1, +2, +4 kW; three seeds.
+4. Threshold at calibration score 99th percentile (approximate quantile).
+5. Pointwise confusion counts; no point-adjustment inflation.
+6. Watermark semantics ablation: 0, 30 and 180 minutes.
+7. Full valid-source partition microbenchmark; three randomized repeats.
+8. Checkpoint restart during 21,600-real-record replay and batch parity.
+
+What is NOT established:
+- New anomaly detection algorithm, causality, electricity theft detection.
+- Real fault accuracy (dataset lacks natural anomaly ground truth).
+- Distributed cluster scalability (the executed environment is local[4]).
+- Statistical significance from three synthetic seeds.
+- Conference novelty or acceptance probability.
+
+Publication gate before submitting a paper:
+- Add independently labelled multi-household datasets (e.g. a suitable licensed
+  energy anomaly benchmark); audit label origin and household-level splits.
+- Add persistence, seasonal forecasting residual, Isolation Forest and a
+  strong recent anomaly baseline under the same compute and calibration budget.
+- Couple faults to delayed arrivals, compare online alerts to offline reference,
+  measure detection delay, event-level precision/recall, memory and state cost.
+- Test random seeds and delay distributions with paired day-block bootstrap
+  confidence intervals; retain untouched households for final validation.
+- Vary source rates and run on a real multi-executor cluster, report hardware,
+  resources, shuffled bytes, skew, state growth and checkpoint recovery time.
+- Compare to verified related work and articulate an original contribution.
+- Use a second dataset and negative findings to challenge the hypothesis.
+
+CAL 1 continuity: The user did not supply the Assignment 1 dataset or report.
+This standalone CAL 2 project selects UCI Household Power Consumption. Reconcile
+this choice with CAL 1 and merge the generated report sections before submission.
+
+Additional completed experiment: the same 21,600 real readings are replayed with
+every tenth measurement delayed by one 3,600-reading file (~60 source hours).
+Two-hour, 72-hour and 168-hour watermarks measure retention, hourly energy error, alert
+changes, and observed peak state memory. This tests one deterministic delayed
+arrival schedule; broad distributional and alert-delay evaluation remains open.
+
+Final revision adds explicit streaming eligibility and finite-value checks,
+pinned atomic source recovery, monthly coverage and missing-run diagnostics,
+key-set assertions, completed Spark event-log exports, local data-volume runs
+with warmups, and a joint raw-minute fault/lateness experiment. The joint protocol
+uses 12 random eligible hours and synthetic +10 kW short bursts on every tenth
+minute (seed 2026). It compares final snapshots with the independent offline
+reference. This does not replace the publication gates above: real fault labels,
+uncertainty under broader delay distributions, strong external baselines and
+multi-executor evaluation remain open research work.

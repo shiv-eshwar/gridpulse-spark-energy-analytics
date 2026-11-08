@@ -1,0 +1,21 @@
+{
+  "source_rows": 2075259,
+  "valid_rows": 2049280,
+  "rejected_rows": 25979,
+  "duplicate_timestamps": 0,
+  "negative_unmetered_minutes": 988,
+  "minimum_unmetered_wh": -2.3999999999999986,
+  "rejection_reason_counts": {
+    "accepted": 2049280,
+    "missing_measurement": 25979
+  },
+  "start": "2006-12-16 17:24:00",
+  "end": "2010-11-26 21:02:00",
+  "observed_kwh": 37283.747700003165,
+  "rdd_sql_reconciliation": "PASS",
+  "wall_seconds": 74.18968383299944,
+  "spark": "3.5.3",
+  "python": "3.11.15",
+  "master": "local[4]",
+  "hardware": "macOS-27.2-arm64-arm-64bit"
+}

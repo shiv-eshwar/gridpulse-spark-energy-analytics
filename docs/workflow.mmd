@@ -1,0 +1,13 @@
+flowchart LR
+  Raw[UCI source + pinned hashes] --> RDD[textFile: map / filter / flatMap / reduceByKey]
+  RDD --> DF[Explicit schema and quality diagnostics]
+  DF --> SQL[SQL summaries and hourly features]
+  SQL --> Calibration[Train through 2008 / calibrate 2009]
+  DF --> Files[Real minute observations arriving as files]
+  Files --> Windows[Finite input filter / watermark / hourly windows]
+  Calibration --> Windows
+  Windows --> Status[Coverage status / score / null or boolean alert]
+  Status --> Sink[Checkpoint and idempotent batch directories]
+  SQL --> Reference[Independent batch reference]
+  Sink --> Compare[Key-set and aggregate/decision comparison]
+  Reference --> Compare

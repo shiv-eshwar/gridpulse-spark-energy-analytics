@@ -1,0 +1,31 @@
+{
+  "technical_ready": true,
+  "technical_checks": {
+    "pinned_archive": true,
+    "pinned_text": true,
+    "row_accounting": true,
+    "rdd_sql_reconciliation": true,
+    "real_stream_minimum_10k": true,
+    "batch_stream_parity": true,
+    "ineligible_alerts_null": true,
+    "ineligible_scores_null": true,
+    "eligible_minimum_54": true,
+    "window_states_explicit": true,
+    "regression_tests_pass": true,
+    "joint_experiment_present": true,
+    "selected_event_logs_present": true,
+    "source_coverage_complete": true,
+    "rejected_run_accounting": true
+  },
+  "screenshot_files": {
+    "spark_jobs.png": true,
+    "spark_stages.png": true,
+    "sql_results.png": true,
+    "streaming_results.png": true
+  },
+  "human_readiness": {
+    "cal1_continuity_or_approval": false,
+    "actual_group_details": false
+  },
+  "submission_ready": false
+}

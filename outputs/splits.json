@@ -1,0 +1,8 @@
+{
+  "train_hours": 17837,
+  "validation_hours": 8686,
+  "test_hours": 7620,
+  "coverage_rule": "at least 54 valid minutes per hour; no imputation",
+  "train_end_exclusive": "2009-01-01",
+  "validation_end_exclusive": "2010-01-01"
+}

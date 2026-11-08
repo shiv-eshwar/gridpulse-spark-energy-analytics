@@ -1,0 +1,491 @@
+[
+  {
+    "batchId": 0,
+    "numInputRows": 3240,
+    "durationMs": {
+      "addBatch": 256,
+      "commitOffsets": 24,
+      "getBatch": 2,
+      "latestOffset": 27,
+      "queryPlanning": 7,
+      "triggerExecution": 342,
+      "walCommit": 25
+    },
+    "eventTime": {
+      "avg": "2010-01-02T06:00:17.166Z",
+      "max": "2010-01-03T12:00:00.000Z",
+      "min": "2010-01-01T00:01:00.000Z",
+      "watermark": "1970-01-01T00:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 61,
+        "numRowsUpdated": 61,
+        "allUpdatesTimeMs": 86,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 0,
+        "commitTimeMs": 199,
+        "memoryUsedBytes": 16224,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 0,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 15072
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 1,
+    "numInputRows": 0,
+    "durationMs": {
+      "addBatch": 162,
+      "commitOffsets": 24,
+      "getBatch": 0,
+      "latestOffset": 3,
+      "queryPlanning": 9,
+      "triggerExecution": 240,
+      "walCommit": 41
+    },
+    "eventTime": {
+      "watermark": "2009-12-27T12:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 61,
+        "numRowsUpdated": 0,
+        "allUpdatesTimeMs": 13,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 3,
+        "commitTimeMs": 248,
+        "memoryUsedBytes": 20736,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 16,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 15712
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 2,
+    "numInputRows": 3600,
+    "durationMs": {
+      "addBatch": 188,
+      "commitOffsets": 25,
+      "getBatch": 2,
+      "latestOffset": 46,
+      "queryPlanning": 7,
+      "triggerExecution": 296,
+      "walCommit": 28
+    },
+    "eventTime": {
+      "avg": "2010-01-04T12:00:25.699Z",
+      "max": "2010-01-06T00:00:00.000Z",
+      "min": "2010-01-01T00:00:00.000Z",
+      "watermark": "2009-12-27T12:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 121,
+        "numRowsUpdated": 121,
+        "allUpdatesTimeMs": 75,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 0,
+        "commitTimeMs": 182,
+        "memoryUsedBytes": 40672,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 32,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 29152
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 3,
+    "numInputRows": 0,
+    "durationMs": {
+      "addBatch": 176,
+      "commitOffsets": 25,
+      "getBatch": 0,
+      "latestOffset": 4,
+      "queryPlanning": 8,
+      "triggerExecution": 255,
+      "walCommit": 41
+    },
+    "eventTime": {
+      "watermark": "2009-12-30T00:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 121,
+        "numRowsUpdated": 0,
+        "allUpdatesTimeMs": 17,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 3,
+        "commitTimeMs": 298,
+        "memoryUsedBytes": 37888,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 48,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 30304
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 4,
+    "numInputRows": 3600,
+    "durationMs": {
+      "addBatch": 199,
+      "commitOffsets": 25,
+      "getBatch": 2,
+      "latestOffset": 45,
+      "queryPlanning": 8,
+      "triggerExecution": 306,
+      "walCommit": 27
+    },
+    "eventTime": {
+      "avg": "2010-01-07T00:00:29.999Z",
+      "max": "2010-01-08T12:00:00.000Z",
+      "min": "2010-01-03T12:01:00.000Z",
+      "watermark": "2009-12-30T00:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 181,
+        "numRowsUpdated": 121,
+        "allUpdatesTimeMs": 93,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 0,
+        "commitTimeMs": 215,
+        "memoryUsedBytes": 58336,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 64,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 43744
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 5,
+    "numInputRows": 0,
+    "durationMs": {
+      "addBatch": 183,
+      "commitOffsets": 26,
+      "getBatch": 0,
+      "latestOffset": 2,
+      "queryPlanning": 9,
+      "triggerExecution": 251,
+      "walCommit": 30
+    },
+    "eventTime": {
+      "watermark": "2010-01-01T12:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 169,
+        "numRowsUpdated": 0,
+        "allUpdatesTimeMs": 18,
+        "numRowsRemoved": 12,
+        "allRemovalsTimeMs": 39,
+        "commitTimeMs": 275,
+        "memoryUsedBytes": 55040,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 80,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 42080
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 6,
+    "numInputRows": 3600,
+    "durationMs": {
+      "addBatch": 202,
+      "commitOffsets": 24,
+      "getBatch": 2,
+      "latestOffset": 41,
+      "queryPlanning": 7,
+      "triggerExecution": 304,
+      "walCommit": 28
+    },
+    "eventTime": {
+      "avg": "2010-01-09T12:00:29.999Z",
+      "max": "2010-01-11T00:00:00.000Z",
+      "min": "2010-01-06T00:01:00.000Z",
+      "watermark": "2010-01-01T12:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 229,
+        "numRowsUpdated": 121,
+        "allUpdatesTimeMs": 100,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 0,
+        "commitTimeMs": 214,
+        "memoryUsedBytes": 71904,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 96,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 54752
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 7,
+    "numInputRows": 0,
+    "durationMs": {
+      "addBatch": 170,
+      "commitOffsets": 25,
+      "getBatch": 0,
+      "latestOffset": 3,
+      "queryPlanning": 8,
+      "triggerExecution": 246,
+      "walCommit": 40
+    },
+    "eventTime": {
+      "watermark": "2010-01-04T00:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 169,
+        "numRowsUpdated": 0,
+        "allUpdatesTimeMs": 17,
+        "numRowsRemoved": 60,
+        "allRemovalsTimeMs": 53,
+        "commitTimeMs": 209,
+        "memoryUsedBytes": 66816,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 112,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 42848
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 8,
+    "numInputRows": 3600,
+    "durationMs": {
+      "addBatch": 213,
+      "commitOffsets": 24,
+      "getBatch": 2,
+      "latestOffset": 45,
+      "queryPlanning": 8,
+      "triggerExecution": 319,
+      "walCommit": 27
+    },
+    "eventTime": {
+      "avg": "2010-01-12T16:33:05.299Z",
+      "max": "2010-01-15T16:09:00.000Z",
+      "min": "2010-01-08T12:01:00.000Z",
+      "watermark": "2010-01-04T00:00:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 229,
+        "numRowsUpdated": 121,
+        "allUpdatesTimeMs": 133,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 0,
+        "commitTimeMs": 213,
+        "memoryUsedBytes": 73184,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 128,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 55264
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 9,
+    "numInputRows": 0,
+    "durationMs": {
+      "addBatch": 155,
+      "commitOffsets": 25,
+      "getBatch": 0,
+      "latestOffset": 4,
+      "queryPlanning": 8,
+      "triggerExecution": 234,
+      "walCommit": 41
+    },
+    "eventTime": {
+      "watermark": "2010-01-08T16:09:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 117,
+        "numRowsUpdated": 0,
+        "allUpdatesTimeMs": 16,
+        "numRowsRemoved": 112,
+        "allRemovalsTimeMs": 53,
+        "commitTimeMs": 178,
+        "memoryUsedBytes": 65664,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 144,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 31200
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 10,
+    "numInputRows": 3600,
+    "durationMs": {
+      "addBatch": 187,
+      "commitOffsets": 25,
+      "getBatch": 2,
+      "latestOffset": 46,
+      "queryPlanning": 8,
+      "triggerExecution": 297,
+      "walCommit": 28
+    },
+    "eventTime": {
+      "avg": "2010-01-16T12:46:06.900Z",
+      "max": "2010-01-18T04:09:00.000Z",
+      "min": "2010-01-11T00:01:00.000Z",
+      "watermark": "2010-01-08T16:09:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 177,
+        "numRowsUpdated": 121,
+        "allUpdatesTimeMs": 79,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 0,
+        "commitTimeMs": 184,
+        "memoryUsedBytes": 58720,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 160,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 42464
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 11,
+    "numInputRows": 0,
+    "durationMs": {
+      "addBatch": 177,
+      "commitOffsets": 25,
+      "getBatch": 0,
+      "latestOffset": 4,
+      "queryPlanning": 8,
+      "triggerExecution": 255,
+      "walCommit": 41
+    },
+    "eventTime": {
+      "watermark": "2010-01-11T04:09:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 117,
+        "numRowsUpdated": 0,
+        "allUpdatesTimeMs": 18,
+        "numRowsRemoved": 60,
+        "allRemovalsTimeMs": 58,
+        "commitTimeMs": 242,
+        "memoryUsedBytes": 51840,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 176,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 30176
+        }
+      }
+    ]
+  },
+  {
+    "batchId": 12,
+    "numInputRows": 360,
+    "durationMs": {
+      "addBatch": 197,
+      "commitOffsets": 24,
+      "getBatch": 2,
+      "latestOffset": 44,
+      "queryPlanning": 7,
+      "triggerExecution": 302,
+      "walCommit": 27
+    },
+    "eventTime": {
+      "avg": "2010-01-16T22:05:00.000Z",
+      "max": "2010-01-18T04:00:00.000Z",
+      "min": "2010-01-15T16:10:00.000Z",
+      "watermark": "2010-01-11T04:09:00.000Z"
+    },
+    "stateOperators": [
+      {
+        "operatorName": "stateStoreSave",
+        "numRowsTotal": 117,
+        "numRowsUpdated": 61,
+        "allUpdatesTimeMs": 87,
+        "numRowsRemoved": 0,
+        "allRemovalsTimeMs": 0,
+        "commitTimeMs": 213,
+        "memoryUsedBytes": 44256,
+        "numRowsDroppedByWatermark": 0,
+        "numShufflePartitions": 8,
+        "numStateStoreInstances": 8,
+        "customMetrics": {
+          "loadedMapCacheHitCount": 192,
+          "loadedMapCacheMissCount": 0,
+          "stateOnCurrentVersionSizeBytes": 29024
+        }
+      }
+    ]
+  }
+]

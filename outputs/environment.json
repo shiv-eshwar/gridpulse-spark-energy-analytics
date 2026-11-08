@@ -1,0 +1,7 @@
+{
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "python": "3.11.15",
+  "logical_cpus": 10,
+  "cpu_model": "Apple M5",
+  "ram_bytes": "17179869184"
+}

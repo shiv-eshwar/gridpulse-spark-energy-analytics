@@ -1,0 +1,32 @@
+# Local environments, research cache and build scratch
+.venv/
+.runtime/
+.firecrawl/
+__pycache__/
+.pytest_cache/
+.sparkStaging/
+tmp/
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Source data regenerates from the pinned UCI archive
+data/
+
+# Keep presentation evidence; regenerate large runtime/state directories
+outputs/*
+!outputs/*.csv
+!outputs/*.json
+!outputs/*.txt
+!outputs/evidence.html
+!outputs/sql/
+!outputs/figures/
+!outputs/screenshots/
+!outputs/streaming/
+outputs/streaming/*
+!outputs/streaming/*.csv
+!outputs/streaming/*.json
+!outputs/logs/
+outputs/logs/*
+!outputs/logs/tests.log

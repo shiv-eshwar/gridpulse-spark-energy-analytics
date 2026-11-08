@@ -1,0 +1,28 @@
+{
+  "reason_counts": {
+    "accepted": 2049280,
+    "missing_measurement": 25979
+  },
+  "examples": [
+    {
+      "reason": "missing_measurement",
+      "raw_line": "21/12/2006;11:23:00;?;?;?;?;?;?;"
+    },
+    {
+      "reason": "missing_measurement",
+      "raw_line": "21/12/2006;11:24:00;?;?;?;?;?;?;"
+    },
+    {
+      "reason": "missing_measurement",
+      "raw_line": "30/12/2006;10:08:00;?;?;?;?;?;?;"
+    },
+    {
+      "reason": "missing_measurement",
+      "raw_line": "30/12/2006;10:09:00;?;?;?;?;?;?;"
+    },
+    {
+      "reason": "missing_measurement",
+      "raw_line": "14/1/2007;18:36:00;?;?;?;?;?;?;"
+    }
+  ]
+}

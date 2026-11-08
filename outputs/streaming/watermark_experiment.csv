@@ -1,0 +1,4 @@
+watermark_minutes,input_records,accepted_records,dropped_by_watermark
+0,4,3,1
+30,4,3,1
+180,4,4,0

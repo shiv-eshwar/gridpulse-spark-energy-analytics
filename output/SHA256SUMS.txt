@@ -1,0 +1,2 @@
+f6804a19bf6f09363ce9d65695d6fc4830a7144fb7b522d47316d881ab459784  output/GridPulse_Submission.zip
+fd32f9b99755ec686c42656b1576970ed9437e629ddd98ab3474d239a2b38762  output/pdf/GridPulse_Report.pdf

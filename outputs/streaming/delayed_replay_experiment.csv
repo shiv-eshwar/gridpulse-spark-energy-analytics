@@ -1,0 +1,4 @@
+watermark_hours,source_records,retained_records,retention_fraction,total_absolute_energy_error_kwh,alert_disagreements,comparable_windows,unscored_delayed_windows,max_state_memory_bytes
+2,21600,19514,0.903425925925926,45.606300000000005,0,357,4,19648
+72,21600,21366,0.9891666666666666,4.629533333333404,0,359,2,45152
+168,21600,21600,1.0,7.933931289727525e-14,0,359,2,73184
